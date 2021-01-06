@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.obox{
+				width: 900px;
+				height: 100%;
+				text-align: center;
+			}
+			li{
+				list-style: none;
+			}
+			.list{		
+				margin-left: 20px;		
+				text-align: center;
+				
+			}
+			.list li{
+				height: 50px;
+				width: 120px;
+				line-height: 50px;
+				margin: 20px 0;
+				float: left;
+				background: wheat;
+				position: relative;
+			}
+			.qx{
+				width: 20px;
+				height: 20px;
+				background: white;
+				position: absolute;
+				top: 15px;
+				left: 15px;
+			}
+			img{
+				width: 100px;
+				margin-top: -25px;
+			}
+			.list1{
+				margin-left: 20px;		
+				text-align: center;
+			}
+			.list1 li{
+				height: 80px;
+				width: 120px;
+				float: left;
+				background: wheat;
+				position: relative;
+				padding-top: 40px;
+				margin-bottom: 10px;
+			}
+			.xz{
+				width: 20px;
+				height: 20px;
+				background: white;
+				position: absolute;
+				top: 55px;
+				left: 15px;
+			}
+			.boxbtn button{
+				width: 20px;
+				height: 20px;
+			}
+			.del{
+				color: red;
+				cursor: pointer;
+			}
+			.img{
+				background: url(img/a1.jpg) 0px 0px/100%;
+			}
+			.h3{
+				color: red;
+				clear: both;
+			}
+			.zj{
+				font-size: 30px;
+				font-weight: 900;
+				color: red;
+				position: absolute;
+				bottom: 20px;
+				left: 40px;
+			}
+		</style>
+		<script src="jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				$(".list1").find(".xz").click(function(){
+					//如果存在就删一个类。如果不存就添加一个类。
+					$(this).toggleClass("img");//添加
+				})
+				$(".qx").click(function(){
+					$(this).toggleClass("img");	
+					if($(this).hasClass("img")){//如果存在就添加"img"类
+						$(".list1").find(".xz").addClass("img");
+					}else{//不存在就移除"img"类
+						$(".list1").find(".xz").removeClass("img");
+					}
+					zjsum();
+				})
+				//删除
+				$(".del").click(function(){
+					$(this).parent().parent().remove();
+					zjsum();
+					djdg();
+				});	
+				//点击减的时候
+				$(".btn1").click(function(){
+					var j = $(this).siblings(".sc").html();
+					if(j>1){
+						j--
+					}
+					$(this).siblings(".sc").html(j)
+					var sum = $(this).siblings(".sc").html()*$(this).parents(".list1").find(".pri").html();
+					$(this).parents(".list1").find(".mon").html(sum.toFixed(2));
+					zjsum();
+				});
+				//点击加的时候
+				$(".btn2").click(function(){
+					var j = $(this).siblings(".sc").html();//把当前的数量存到J中
+					j++;
+					$(this).siblings(".sc").html(j)//把J放到数量的值去 * 当前的价格 的值放入 SUM中
+					var sum = $(this).siblings(".sc").html()*$(this).parents(".list1").find(".pri").html();
+					$(this).parents(".list1").find(".mon").html(sum.toFixed(2));
+					zjsum();
+				});	
+				//计算总价
+				function zjsum(){
+					var sum = 0 ;
+					for(var i=0 ; i<$(".xz").length ; i++){
+						if($(".xz").eq(i).hasClass("img")){
+							sum+=($(".xz").eq(i).parents(".list1").find(".mon").html()-0)
+						}
+					}
+					$(".zj").html("总价："+sum.toFixed(2));
+				}
+				//单个选中框
+				$(".xz").click(function(){				
+					zjsum();
+					djdg();
+				})
+				
+				//点击打勾
+				function djdg(){
+					var s = 0;
+					for(var i=0;i<$(".xz").length;i++){
+						if($(".xz").eq(i).hasClass("img")){
+							s++;
+						}
+					}
+					if(s==$(".xz").length && $(".xz").length!=0){
+						$(".qx").addClass("img");
+					}else{
+						$(".qx").removeClass("img");
+					}
+				}
+			})
+		</script>
+	</head>
+	<body>
+		<div class="obox">
+			<div class="box1">
+				<h2>全部商品</h2>
+				<hr />
+				<div class="box11">
+					<ul class="list">
+						<li>
+							<div class="qx"></div>
+							<p>全选</p>
+						</li>
+						<li>
+							<p>商品</p>
+						</li>
+						<li>
+							<p>商品信息</p>
+						</li>
+						<li>
+							<p>价格</p>
+						</li>
+						<li>
+							<p>数量</p>
+						</li>
+						<li>
+							<p>金额</p>
+						</li>
+						<li>
+							<p>操作</p>
+						</li>
+					</ul>			
+				</div>
+			</div>
+			<ul class="list1 l1">
+				<li>
+					<div class="xz"></div>
+				</li>
+				<li>
+					<img src="img/ia_100000020.webp" />
+				</li>
+				<li>
+					<p>wefdsfsdfdsfgggdf发到饭否改变</p>
+				</li>
+				<li>
+					<span class="pri">50.99</span>
+				</li>
+				<li>
+					<div class="boxbtn">
+						<button class="btn1">-</button> 
+						<b class="sc">1</b>
+						<button class="btn2">+</button> 
+					</div>
+				</li>
+				<li>
+					<span class="mon">50.99</span>
+				</li>
+				<li>
+					<b class="del">删除</b>
+				</li>
+			</ul>
+			<ul class="list1 l1">
+				<li>
+					<div class="xz"></div>
+				</li>
+				<li>
+					<img src="img/ia_100000020.webp" />
+				</li>
+				<li>
+					<p>wefdsfsdfdsfgggdf发到饭否改变</p>
+				</li>
+				<li>
+					<span class="pri">50.99</span>
+				</li>
+				<li>
+					<div class="boxbtn">
+						<button class="btn1">-</button> 
+						<b class="sc">1</b>
+						<button class="btn2">+</button> 
+					</div>
+				</li>
+				<li>
+					<span class="mon">50.99</span>
+				</li>
+				<li>
+					<b class="del">删除</b>
+				</li>
+			</ul>
+			<ul class="list1 l1">
+				<li>
+					<div class="xz"></div>
+				</li>
+				<li>
+					<img src="img/ia_100000020.webp" />
+				</li>
+				<li>
+					<p>wefdsfsdfdsfgggdf发到饭否改变</p>
+				</li>
+				<li>
+					<span class="pri">50.99</span>
+				</li>
+				<li>
+					<div class="boxbtn">
+						<button class="btn1">-</button> 
+						<b class="sc">1</b>
+						<button class="btn2">+</button> 
+					</div>
+				</li>
+				<li>
+					<span class="mon">50.99</span>
+				</li>
+				<li>
+					<b class="del">删除</b>
+				</li>
+			</ul>
+			<ul class="list1 l1">
+				<li>
+					<div class="xz"></div>
+				</li>
+				<li>
+					<img src="img/ia_100000020.webp" />
+				</li>
+				<li>
+					<p>wefdsfsdfdsfgggdf发到饭否改变</p>
+				</li>
+				<li>
+					<span class="pri">50.99</span>
+				</li>
+				<li>
+					<div class="boxbtn">
+						<button class="btn1">-</button> 
+						<b class="sc">1</b>
+						<button class="btn2">+</button> 
+					</div>
+				</li>
+				<li>
+					<span class="mon">50.99</span>
+				</li>
+				<li>
+					<b class="del">删除</b>
+				</li>
+			</ul>
+			<ul class="list1 l1">
+				<li>
+					<div class="xz"></div>
+				</li>
+				<li>
+					<img src="img/ia_100000020.webp" />
+				</li>
+				<li>
+					<p>wefdsfsdfdsfgggdf发到饭否改变</p>
+				</li>
+				<li>
+					<span class="pri">50.99</span>
+				</li>
+				<li>
+					<div class="boxbtn">
+						<button class="btn1">-</button> 
+						<b class="sc">1</b>
+						<button class="btn2">+</button> 
+					</div>
+				</li>
+				<li>
+					<span class="mon">50.99</span>
+				</li>
+				<li>
+					<b class="del">删除</b>
+				</li>
+			</ul>
+			<ul class="list1 l1">
+				<li>
+					<div class="xz"></div>
+				</li>
+				<li>
+					<img src="img/ia_100000020.webp" />
+				</li>
+				<li>
+					<p>wefdsfsdfdsfgggdf发到饭否改变</p>
+				</li>
+				<li>
+					<span class="pri">50.99</span>
+				</li>
+				<li>
+					<div class="boxbtn">
+						<button class="btn1">-</button> 
+						<b class="sc">1</b>
+						<button class="btn2">+</button> 
+					</div>
+				</li>
+				<li>
+					<span class="mon">50.99</span>
+				</li>
+				<li>
+					<b class="del">删除</b>
+				</li>
+			</ul>
+			<ul class="list1">
+				<li>
+					<div class="xz"></div>
+				</li>
+				<li>
+					<img src="img/ia_100000021.webp" />
+				</li>
+				<li>
+					<p>wefdsfsdfdsfgggdf发到饭否改变</p>
+				</li>
+				<li>
+					<span class="pri">60.99</span>
+				</li>
+				<li>
+					<div class="boxbtn">
+						<button class="btn1">-</button> 
+						<b class="sc">1</b>
+						<button class="btn2">+</button> 
+					</div>
+				</li>
+				<li>
+					<span class="mon">60.99</span>
+				</li>
+				<li>
+					<b class="del">删除</b>
+				</li>
+			</ul>
+			<ul class="list1">
+				<li>
+					<div class="xz"></div>
+				</li>
+				<li>
+					<img src="img/ia_100000022.webp" />
+				</li>
+				<li>
+					<p>wefdsfsdfdsfgggdf发到饭否改变</p>
+				</li>
+				<li>
+					<span class="pri">70.99</span>
+				</li>
+				<li>
+					<div class="boxbtn">
+						<button class="btn1">-</button> 
+						<b class="sc">1</b>
+						<button class="btn2">+</button> 
+					</div>
+				</li>
+				<li>
+					<span class="mon">70.99</span>
+				</li>
+				<li>
+					<b class="del">删除</b>
+				</li>
+			</ul>
+			<ul class="list1">
+				<li>
+					<div class="xz"></div>
+				</li>
+				<li>
+					<img src="img/ia_100000023.webp" />
+				</li>
+				<li>
+					<p>wefdsfsdfdsfgggdf发到饭否改变</p>
+				</li>
+				<li>
+					<span class="pri">80.99</span>
+				</li>
+				<li>
+					<div class="boxbtn">
+						<button class="btn1">-</button> 
+						<b class="sc">1</b>
+						<button class="btn2">+</button> 
+					</div>
+				</li>
+				<li>
+					<span class="mon">80.99</span>
+				</li>
+				<li>
+					<b class="del">删除</b>
+				</li>
+			</ul>
+			<div>
+				<p class="zj">总价：</p>
+			</div>
+		</div>
+	</body>
+</html>
